@@ -1,0 +1,144 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SorteosVAREZ</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #7B2FF7, #F107A3);
+            color: white;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+        }
+        header img {
+            max-width: 100%%;
+            height: auto;
+        }
+        .container {
+            padding: 20px;
+        }
+        .number-grid {
+            display: grid;
+            grid-template-columns: repeat(10, 1fr);
+            gap: 5px;
+            margin-bottom: 20px;
+        }
+        .number-grid button {
+            padding: 10px;
+            font-size: 16px;
+            border: none;
+            background-color: white;
+            color: #7B2FF7;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+        .number-grid button:disabled {
+            background-color: #ccc;
+            color: #666;
+            cursor: not-allowed;
+        }
+        form input, form button {
+            display: block;
+            width: 100%%;
+            padding: 10px;
+            margin: 10px 0;
+            border: none;
+            border-radius: 5px;
+        }
+        form button {
+            background-color: white;
+            color: #F107A3;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        .share-button {
+            margin-top: 20px;
+            background-color: #25D366;
+            color: white;
+        }
+        section {
+            padding: 20px;
+            background: rgba(0,0,0,0.2);
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <img src="flyer.jpeg" alt="Flyer Sorteo">
+</header>
+
+<div class="container">
+    <h1>Participá ahora</h1>
+    <div class="number-grid" id="numberGrid">
+        <!-- Números se insertan con JS -->
+    </div>
+    <form id="participationForm">
+        <input type="text" id="nombre" placeholder="Nombre y Apellido" required>
+        <input type="text" id="dni" placeholder="DNI" required>
+        <input type="tel" id="telefono" placeholder="Teléfono" required>
+        <input type="email" id="correo" placeholder="Correo Electrónico" required>
+        <button type="submit">Acordar Pago</button>
+    </form>
+    <button class="share-button" onclick="compartir()">Compartir por WhatsApp</button>
+</div>
+
+<section>
+    <h2>¿Quiénes Somos?</h2>
+    <p>Somos VAREZ y realizamos sorteos de productos de calidad. Esta vez, sorteamos un Proyector 360 con Android + Parlante RGB. 
+    El sorteo se realiza de forma 100%% transparente, usando la Quiniela Nacional Argentina (CABA), Sorteo Nocturno. 
+    Gana el número que coincida con las 2 últimas cifras del 1er premio.</p>
+</section>
+
+<script>
+    const grid = document.getElementById('numberGrid');
+    let numeroElegido = null;
+
+    for(let i=0; i<100; i++) {
+        const btn = document.createElement('button');
+        let num = i.toString().padStart(2, '0');
+        btn.textContent = num;
+        btn.onclick = () => {
+            if (numeroElegido !== null) {
+                document.querySelector(`[data-num='${numeroElegido}']`).disabled = false;
+            }
+            btn.disabled = true;
+            numeroElegido = num;
+            btn.setAttribute("data-num", num);
+        };
+        btn.setAttribute("data-num", num);
+        grid.appendChild(btn);
+    }
+
+    document.getElementById('participationForm').onsubmit = function(e) {
+        e.preventDefault();
+        const nombre = document.getElementById('nombre').value;
+        const dni = document.getElementById('dni').value;
+        const telefono = document.getElementById('telefono').value;
+        const correo = document.getElementById('correo').value;
+
+        const mensaje = `Hola! Quiero participar del sorteo SorteosVAREZ.
+Número: ${numeroElegido}
+Nombre: ${nombre}
+DNI: ${dni}
+Teléfono: ${telefono}
+Correo: ${correo}
+Coordino el pago de $3000.`;
+        window.open(`https://wa.me/541162330913?text=${encodeURIComponent(mensaje)}`, '_blank');
+    }
+
+    function compartir() {
+        const mensaje = `🎉 Participá del sorteo de un Proyector 360 + Parlante en SorteosVAREZ.com
+Elegí tu número y completá tus datos por solo $3.000!
+👉 Ingresá ya y participá!`;
+        window.open(`https://wa.me/?text=${encodeURIComponent(mensaje)}`, '_blank');
+    }
+</script>
+
+</body>
+</html>
