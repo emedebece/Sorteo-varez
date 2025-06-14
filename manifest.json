@@ -1,0 +1,15 @@
+{
+  "name": "SorteosVAREZ",
+  "short_name": "VAREZ",
+  "start_url": "./",
+  "display": "standalone",
+  "background_color": "#7B2FF7",
+  "theme_color": "#F107A3",
+  "icons": [
+    {
+      "src": "icon.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    }
+  ]
+}
